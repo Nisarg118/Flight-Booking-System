@@ -39,13 +39,20 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    //data(object)->{col:value,.....}
-    const response = await this.model.update(data, {
-      where: {
-        id: id,
-      },
-    });
-    return response;
+    try {
+      const response = await this.model.update(data, {
+        where: { id },
+      });
+      if (response[0] === 0) {
+        throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
+      }
+
+      const updatedRecord = await this.model.findByPk(id);
+      return updatedRecord;
+    } catch (error) {
+      console.error("Sequelize Update Error:", error); // << log real error here
+      throw error;
+    }
   }
 }
 

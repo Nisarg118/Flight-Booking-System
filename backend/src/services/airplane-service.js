@@ -68,9 +68,30 @@ async function destroyAirplane(id) {
   }
 }
 
+async function updateAirplane(id, data) {
+  try {
+    const response = await airplaneRepository.update(id, data);
+    return response;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      console.error("Repository error in updateAirplane:", error); // <== Add this
+
+      throw new AppError(
+        "Requested Airplane to be updated is not found",
+        error.statusCode
+      );
+    }
+    throw new AppError(
+      "Cannot fetch data of the airplane",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
   destroyAirplane,
+  updateAirplane,
 };
