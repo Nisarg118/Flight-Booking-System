@@ -46,22 +46,22 @@ async function updateCity(id, data) {
   }
 }
 
-async function destroyAirplane(id) {
+async function destroyCity(id) {
   try {
     const response = await cityRepository.destroy(id);
     return response;
   } catch (error) {
     if (error.statusCode === StatusCodes.NOT_FOUND) {
       throw new AppError(
-        "Requested Airplane to be deleted is not found",
+        "Requested City to be deleted is not found",
         error.statusCode
       );
     }
     throw new AppError(
-      "Cannot fetch data of all the airplanes",
+      "Cannot fetch data of all the city",
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
 }
 
-module.exports = { createCity, updateCity };
+module.exports = { createCity, updateCity, destroyCity };

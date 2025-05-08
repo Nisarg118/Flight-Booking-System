@@ -13,6 +13,6 @@ router.post(
 
 router.patch("/:id", CityController.updateCity);
 
-// router.patch("/:id", AirplaneController.updateAirplane);
+router.delete("/:id", CityController.destroyCity);
 
 module.exports = router;
