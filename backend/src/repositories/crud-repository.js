@@ -40,11 +40,13 @@ class CrudRepository {
 
   async update(id, data) {
     try {
+      console.log(id, data);
+
       const response = await this.model.update(data, {
         where: { id },
       });
       if (response[0] === 0) {
-        throw new AppError("Airplane not found", StatusCodes.NOT_FOUND);
+        throw new AppError("Resource not found", StatusCodes.NOT_FOUND);
       }
 
       const updatedRecord = await this.model.findByPk(id);

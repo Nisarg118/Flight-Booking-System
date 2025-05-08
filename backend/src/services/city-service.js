@@ -26,4 +26,42 @@ async function createCity(data) {
   }
 }
 
-module.exports = { createCity };
+async function updateCity(id, data) {
+  try {
+    const response = await cityRepository.update(id, data);
+    return response;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      console.error("Repository error in updateCity:", error); // <== Add this
+
+      throw new AppError(
+        "Requested City to be updated is not found",
+        error.statusCode
+      );
+    }
+    throw new AppError(
+      "Cannot fetch data of the city",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+async function destroyAirplane(id) {
+  try {
+    const response = await cityRepository.destroy(id);
+    return response;
+  } catch (error) {
+    if (error.statusCode === StatusCodes.NOT_FOUND) {
+      throw new AppError(
+        "Requested Airplane to be deleted is not found",
+        error.statusCode
+      );
+    }
+    throw new AppError(
+      "Cannot fetch data of all the airplanes",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+module.exports = { createCity, updateCity };
