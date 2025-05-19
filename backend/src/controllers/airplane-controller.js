@@ -37,7 +37,7 @@ async function getAirplanes(req, res) {
   }
 }
 
-// GET: /airplanes/:id
+// GET: /airplane/:id
 // req-body: {}
 async function getAirplane(req, res) {
   try {
